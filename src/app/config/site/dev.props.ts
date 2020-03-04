@@ -8,16 +8,16 @@ import {
 } from '@const/global/flags'
 
 const CONFIG: StartProperties = {
-  MAIN_PAGE: 'https://example.com/',
-  defaultLoginValue: 'test-email@test.com',
-  defaultPasswordValue: 'test-email',
+  MAIN_PAGE: 'http://new.dev.letu.ru/',
+  defaultLoginValue: 'test@lolkek.com',
+  defaultPasswordValue: '987654321',
   DYN_ADMIN: {
-    PROD_SCHEME_URL: 'http://example.com:7003/dyn/admin/',
+    PROD_SCHEME_URL: 'http://new.dev.letu.ru:8280/dyn/admin/',
     username: DYN_USERNAME,
     password: DYN_PASSWORD,
   },
   SOAP: {
-    baseURL: 'https://example.com/',
+    baseURL: 'http://new.dev.letu.ru/',
     addProduct: 'webservice/secondExample',
     addOrganization: 'webservice/secondExample',
     username: SOAP_USERNAME,

@@ -15,6 +15,7 @@ const selectors = {
   accountMenu: '#headerPersonalAccountLabel',
   searchInput: '#headerSearchInput',
   searchButton: '#headerSearchButton',
+  cartButton: 'a[href="/cart"]',
   menuItems: `${container} .header-mainmenu-list-item`,
   tel: '#headerTel',
   logo: logoS,
@@ -46,6 +47,10 @@ export default class Header extends Rest {
 
   async clickSearch() {
     await super.click(selectors.searchButton)
+  }
+
+  async clickCart(){
+    await super.click(selectors.cartButton)
   }
 
   async hoverCatalogMenu() {
