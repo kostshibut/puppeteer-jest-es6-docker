@@ -56,14 +56,14 @@ singlePack('products', () => {
     const LetuPage = po.rest
     const path = 'https://www.letu.ru'
     await LetuPage.open(path, true, { waitUntil: 'networkidle2' })
-    const select = 'a[href=\'/cart\'] > em'
+    const select = 'a[href="/cart"] > em'
     const cartCount = await LetuPage.getText(select)
     await LetuPage.click('a[href="/cart"]')
     await LetuPage.waitForSpinnerToDisappear()
-    const recommendedList = 'a[class=\'products-list__item-container ddl_product_link\']'
+    const recommendedList = 'a[class="products-list__item-container ddl_product_link"]'
     await LetuPage.clickWithResponse(recommendedList, true, 'addItem')
     await LetuPage.clickWithResponse('button.btn.btn-lg.btn-primary', true, 'addItemToOrder')
-    await LetuPage.click('button[class=\'mfp-close\']')
+    await LetuPage.click('button[class="mfp-close"]')
     expect(cartCount).not.toEqual(await LetuPage.getText(select))
     await browser.close()
   })
@@ -75,13 +75,13 @@ singlePack('products', () => {
     await LetuPage.open(path, true, { waitUntil: 'networkidle2' })
     await LetuPage.click('a[href="/login"]')
     await LetuPage.waitForSpinnerToDisappear()
-    await LetuPage.type('input[class=\'form-control text-input login-input\']', 'k.shibut98@mail.ru')
-    await LetuPage.type('input[type=\'password\']', '0987654321')
-    await LetuPage.click('button[class=\'btn btn-primary btn-block\']')
+    await LetuPage.type('input[class="form-control text-input login-input"]', 'k.shibut98@mail.ru')
+    await LetuPage.type('input[type="password"]', '0987654321')
+    await LetuPage.click('button[class="btn btn-primary btn-block"]')
     await LetuPage.waitForSpinnerToDisappear()
-    await LetuPage.click('a[class=\'header-dropdown-link\'][href=\'#\']')
+    await LetuPage.click('a[class="header-dropdown-link"][href="#"]')
     await LetuPage.waitForSpinnerToDisappear()
-    const loginText = await LetuPage.getText('div[class=\'user-menu_login-link\'] > span')
+    const loginText = await LetuPage.getText('div[class="user-menu_login-link"] > span')
     expect(loginText).toContain('Войти')
     await browser.close()
   })
