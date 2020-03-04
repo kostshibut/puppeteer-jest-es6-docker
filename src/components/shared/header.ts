@@ -49,7 +49,7 @@ export default class Header extends Rest {
     await super.click(selectors.searchButton)
   }
 
-  async clickCart(){
+  async clickCart() {
     await super.click(selectors.cartButton)
   }
 
