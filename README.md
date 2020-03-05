@@ -20,7 +20,7 @@ npm test --ENV_TO_CHECK=<LOCAL> --BUILD_NUMBER=<BUILD_NUMBER> <SPEC> --CHECK=<UI
     - TEST - all patterns are executed
     - SPEC UI PERF - only files with those names are executed
     - API - pattern for files: api rest soap
-<UI> - specifies how to check, preconditions are different
+<UI> - specifies how tso check, preconditions are different
     for example, 'UI' is executed with browser, when API does not
     options: 'UI', 'API', 'REST', 'SOAP', 'SPEC', 'PERF', 'TEST'
 <SCREENSHOT> - specifies whether to make screenshots

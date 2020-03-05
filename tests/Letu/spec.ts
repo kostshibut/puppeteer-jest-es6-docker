@@ -103,7 +103,7 @@ singlePack('products', () => {
     await PLP.waitForElement('a[class*="products-list__item-container"]')
     await PLP.clickWithResponse('a[class*="products-list__item-container"]', true)
     await PLP.waitForElement('a[class*="products-list__item-container"]')
-
+    // if (PDP.isVisible())
     await PDP.clickWithResponse('div[class*="alert-small"]')
     await PDP.waitForElement('div[class="store-search-group-header"]')
     const storeAddress = await PDP.getText('div[class="store-item-header"]>span[itemprop="name"]')
@@ -111,9 +111,31 @@ singlePack('products', () => {
     await PDP.waitForElement('div[class="product-delivery-info"]')
 
     expect((await PDP.getText('div[class="product-delivery-info"]>ul>li>p')).toLowerCase()).toContain(storeAddress.toLowerCase())
-    await Header.selectCity()
-    await Header.waitForElement('div[class="letu-modal-title"]')
-    await Header.typeCity('Урай')
-    await PDP.waitForElement('div[class="product-delivery-info"]')
+    // await Header.clickWithResponse('span[class="link-underline"]')
+    // await Header.waitForElement('div[class="mfp-content"]>div[class="letu-modal"]>div[class="letu-modal-title"]')
+    // await Header.type('form>div>input[class*="search-form__input"]', 'Урай')
+    // await Header.waitForTextToBe('Урай', 'ul[class="list-group city-selector"]>li[class="list-group-item city-item btn-mfp-close"')
+    // await Header.click('ul[class="list-group city-selector"]>li[class="list-group-item city-item btn-mfp-close"')
+    await Header.changeCity('Урай')
+
+    // await Header.selectCity()
+    // await Header.waitForElement('div[class="mfp-content"]>div[class="letu-modal"]>div[class="letu-modal-title"]')
+    // await Header.typeCity('Урай')
+    // await PDP.waitForElement('div[class="product-delivery-info"]')
+    await PDP.waitForSpinnerToDisappear()
+    expect(await PDP.getText('div[class="product-delivery-info"]>ul')).toEqual('')
+    await PDP.clickWithResponse('button[class="btn btn-lg btn-primary"]', true)
+    await PDP.clickWithResponse('a[href="cart"]', true)
+    await AccountPage.waitForElement('label[for*="-courier"]')
+    expect((await PDP.getText('div[class="products-list-table__delivery"]')).toLowerCase()).not.toContain(storeAddress.toLowerCase())
+    expect((await PDP.getText('div[class="products-list-table__delivery"]')).toLowerCase()).toContain('недоступна')
+
+    await Header.changeCity('Москва')
+
+    await AccountPage.waitForElement('label[for*="-store"]')
+    expect((await PDP.getText('div[class="products-list-table__delivery"]')).toLowerCase()).toContain(storeAddress.toLowerCase())
+
+    await AccountPage.clickWithResponse('button[class="btn btn-primary btn-lg btn-block"]', true)
+    // const is_disabled = await AccountPage.$('button[disabled]') !== null;
   })
 })

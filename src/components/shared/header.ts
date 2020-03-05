@@ -32,13 +32,13 @@ const selectors = {
 export default class Header extends Rest {
   static getSelectors = () => selectors
 
-  async selectCity(){
-    await super.click(selectors.citySelector)
-  }
-
-  async typeCity(text: string){
+  async changeCity(text: string) {
+    await super.clickPuppeteer(selectors.citySelector)
+    await super.waitForElement('div[class="mfp-content"]>div[class="letu-modal"]>div[class="letu-modal-title"]')
     await super.type(selectors.searchCity, text)
-    await super.click('li[class*="list-group-item city-item"]')
+    await super.waitForTextToBe(text, 'ul[class="list-group city-selector"]>li[class*="city-item"')
+    await super.clickPuppeteer('ul[class="list-group city-selector"]>li[class*="city-item"')
+    await super.waitForSpinnerToDisappear()
   }
 
   async searchFor(text: string, timeout = defaultWaitTimer) {
