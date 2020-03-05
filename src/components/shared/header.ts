@@ -13,14 +13,16 @@ const selectors = {
   dropdownAccount: '#headerDropdownAccount',
   dropdownLogout: '#headerDropdownLogout',
   accountMenu: '#headerPersonalAccountLabel',
-  searchInput: '#headerSearchInput',
-  searchButton: '#headerSearchButton',
+  searchInput: 'input[class*="search-form__input"][type="search"]',
+  searchButton: 'form[id="search-form"]>div>button[class*="search-form__submit"]',
   cartButton: 'a[href="/cart"]',
   menuItems: `${container} .header-mainmenu-list-item`,
   tel: '#headerTel',
   logo: logoS,
   personalManagerContainer: '#headerPersonalManager',
   modalPersonalManagerName: '#headerModalPersonalManagerName',
+  citySelector: 'span[class="link-underline"]',
+  searchCity: 'form>div>input[class*="search-form__input"]',
   miniBasket: {
     container: '#headerMiniBasket',
     quantity: '#headerMiniBasketQuantity',
@@ -29,6 +31,15 @@ const selectors = {
 
 export default class Header extends Rest {
   static getSelectors = () => selectors
+
+  async selectCity(){
+    await super.click(selectors.citySelector)
+  }
+
+  async typeCity(text: string){
+    await super.type(selectors.searchCity, text)
+    await super.click('li[class*="list-group-item city-item"]')
+  }
 
   async searchFor(text: string, timeout = defaultWaitTimer) {
     await super.emptyValue(selectors.searchInput)

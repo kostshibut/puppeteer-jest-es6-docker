@@ -8,9 +8,9 @@ import {
 } from '@const/global/flags'
 
 const CONFIG: StartProperties = {
-  MAIN_PAGE: 'https://example-prod.com/',
-  defaultLoginValue: 'test-email@test.com',
-  defaultPasswordValue: 'test-email',
+  MAIN_PAGE: 'https://letu.ru/',
+  defaultLoginValue: 'k.shibut98@mail.ru',
+  defaultPasswordValue: '0987654321',
   DYN_ADMIN: {
     PROD_SCHEME_URL: 'http://example.com:7003/dyn/admin/',
     username: DYN_USERNAME,
