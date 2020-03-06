@@ -26,6 +26,7 @@ import GoogleEmail from '@components/shared/email'
 import ProfileAdapterRepository
   from '@components/atg/dynadmin/repository/profile.adaptory'
 import Rest from '@classes/util/rest'
+import CheckoutPage from '@components/page/checkout.page'
 
 interface PageParent {
   [name: string]: Page,
@@ -43,6 +44,7 @@ export interface PagesMap {
   personalManagerModal: PersonalManagerModal,
   accountPage: AccountPage,
   homePage: HomePage,
+  checkoutPage: CheckoutPage,
   resetPasswordPage: ResetPasswordPage,
   footer: Footer,
   header: Header,
@@ -71,6 +73,7 @@ const pageObjects: PagesMap & PageParent = {
   personalManagerModal: new PersonalManagerModal(),
   accountPage: new AccountPage(),
   homePage: new HomePage(),
+  checkoutPage: new CheckoutPage(),
   resetPasswordPage: new ResetPasswordPage(),
   footer: new Footer(),
   header: new Header(),
