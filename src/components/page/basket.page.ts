@@ -15,6 +15,7 @@ export default class Basket extends Rest {
     await elem.hover()
     const bnt = await super.getElementFromListPuppeteer(selectors.addItemToBasket, position)
     await bnt.click()
+    await super.waitForModal()
     return text
   }
 

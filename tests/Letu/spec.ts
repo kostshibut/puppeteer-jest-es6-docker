@@ -85,8 +85,6 @@ singlePack('products', () => {
     await Basket.openPDP()
 
     expect((await PDP.getProductTitle()).toLowerCase()).toContain(itemName.toLowerCase())
-
-    await browser.close()
   })
 
   // // test 5

@@ -7,7 +7,6 @@ const selectors = {
 }
 
 export default class Modal extends Rest {
-  
   async closeModal() {
     await super.clickPuppeteer(selectors.closeModal)
     await this.waitForModalClose()

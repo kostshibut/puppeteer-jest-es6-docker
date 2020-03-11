@@ -104,6 +104,10 @@ export default class Rest extends AbstractContentObject {
       .catch(e => console.log('resolveClickWithResponse', e))
   }
 
+  async waitForModal(timeout = defaultResponseWaitTimer) {
+    super.waitForElement('mfp-container', timeout)
+  }
+
   async waitRemoveItemFromOrderResponse(
           timeout = defaultResponseWaitTimer): Promise<Response> {
     return super.waitForResponseURLToContain('removeItemFromOrder', timeout)

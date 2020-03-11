@@ -2,7 +2,7 @@
 import Rest from '@classes/util/rest'
 
 const selectors = {
-  addItemToBasket: 'button.btn.btn-lg.btn-primary',
+  addItemToBasket: 'button.btn-lg.btn-primary',
 }
 
 export default class ProductModal extends Rest {
