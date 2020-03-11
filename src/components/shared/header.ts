@@ -29,5 +29,6 @@ export default class Header extends Rest {
 
   async clickCart() {
     await super.clickPuppeteer(selectors.cartButton)
+    await super.waitCartResponse()
   }
 }

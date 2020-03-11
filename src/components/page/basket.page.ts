@@ -1,33 +1,25 @@
 'use strict'
 import Rest from '@classes/util/rest'
 
-const Xpaths = {
-  hoverProduct: '(//a[contains(@class,"products-list__item-container")])',
-  addItemToBasket: `(//button[contains(@class,"btn-primary")])`,
-  productTitle: '(//div[contains(@class,"products-list__item-title")])',
-  itemInOrder: '(//div[contains(@class,"cart-item-header")]/a)',
-}
-
 const selectors = {
+  hoverProduct: 'a[class*="products-list__item-container"]',
+  addItemToBasket: 'button[class*="btn-primary"]',
+  productTitle: '(//div[contains(@class,"products-list__item-title")])',
   itemInOrder: 'div[class="cart-item-header"]',
 }
 
 export default class Basket extends Rest {
-  static getSelectors = () => selectors
-
-  static getXpaths = () => Xpaths
-
-  async addItemToBasketFromRecommended(position: number = 1) {
-    await super.hoverPuppeteer(Xpaths.hoverProduct + `[${position}]`)
-    await super.clickPuppeteer(Xpaths.addItemToBasket + `[${position}]`)
+  async addItemToBasketFromRecommended(position: number = 0) {
+    const text = await super.getText(selectors.productTitle + `[${position + 1}]`, 10000)
+    const elem = await super.getElementFromListPuppeteer(selectors.hoverProduct, position)
+    await elem.hover()
+    const bnt = await super.getElementFromListPuppeteer(selectors.addItemToBasket, position)
+    await bnt.click()
+    return text
   }
 
-  async getProductTitle(position: number = 1) {
-    return super.getText(Xpaths.productTitle + `[${position}]`)
-  }
-
-  async clickItemFromOrder(position: number = 1) {
+  async openPDP(position: number = 0) {
     await super.waitForElement(selectors.itemInOrder)
-    await super.clickPuppeteer(Xpaths.itemInOrder + `[${position}]`, 5000)
+    await super.clickAndGetOnPuppeteer(selectors.itemInOrder, position)
   }
 }

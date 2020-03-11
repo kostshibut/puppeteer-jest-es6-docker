@@ -1,17 +1,12 @@
 'use strict'
-import Rest from '@classes/util/rest'
+import Modal from '@components/modal/common/modal'
 
 const selectors = {
-  closeModal: 'button[class="mfp-close"]',
   productTitle: 'div[class*="product-modal-title"]',
 }
 
-export default class BasketModal extends Rest {
+export default class BasketModal extends Modal {
     static getSelectors = () => selectors
-
-    async closeModal() {
-      await super.clickPuppeteer(selectors.closeModal)
-    }
 
     async getProductTitle() {
       return super.getText(selectors.productTitle)

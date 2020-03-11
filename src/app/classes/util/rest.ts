@@ -138,4 +138,9 @@ export default class Rest extends AbstractContentObject {
           timeout = defaultResponseWaitTimer): Promise<Response> {
     return super.waitForResponseURLToContain('login', timeout)
   }
+
+  async waitCartResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('cart', timeout)
+  }
 }
