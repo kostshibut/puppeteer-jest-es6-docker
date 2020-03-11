@@ -264,6 +264,6 @@ export default class Waiter extends Page {
   }
 
   isXpath(selector: string) {
-    return selector.startsWith('//')
+    return selector.startsWith('//') || selector.startsWith('(//')
   }
 }

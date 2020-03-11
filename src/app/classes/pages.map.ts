@@ -10,6 +10,8 @@ import HomePage from '@components/page/home.page'
 import ResetPasswordPage from '@components/page/reset.password.page'
 import AccountPage from '@components/page/account.page'
 import LoginModal from '@components/modal/login.modal'
+import ProductModal from '@components/modal/product.modal'
+import BasketModal from '@components/modal/basket.modal'
 import Alert from '@components/message/alert.message'
 import PersonalManagerModal
   from '@components/modal/common/personal.manager.modal'
@@ -27,6 +29,7 @@ import ProfileAdapterRepository
   from '@components/atg/dynadmin/repository/profile.adaptory'
 import Rest from '@classes/util/rest'
 import CheckoutPage from '@components/page/checkout.page'
+import StoreModal from '@components/modal/store.modal'
 
 interface PageParent {
   [name: string]: Page,
@@ -41,6 +44,9 @@ export interface PagesMap {
   productDetailsPage: ProductDetailsPage,
   productLandingPage: ProductLandingPage,
   loginModal: LoginModal,
+  productModal: ProductModal,
+  basketModal: BasketModal,
+  storeModal: StoreModal,
   personalManagerModal: PersonalManagerModal,
   accountPage: AccountPage,
   homePage: HomePage,
@@ -70,6 +76,9 @@ const pageObjects: PagesMap & PageParent = {
   productDetailsPage: new ProductDetailsPage(),
   productLandingPage: new ProductLandingPage(),
   loginModal: new LoginModal(),
+  productModal: new ProductModal(),
+  basketModal: new BasketModal(),
+  storeModal: new StoreModal(),
   personalManagerModal: new PersonalManagerModal(),
   accountPage: new AccountPage(),
   homePage: new HomePage(),

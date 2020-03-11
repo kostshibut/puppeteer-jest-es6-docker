@@ -264,6 +264,20 @@ export default class AbstractContentObject extends Checker {
     }
   }
 
+  async hoverPuppeteer(selector: string, timeout = defaultWaitTimer) {
+    if (super.isXpath(selector)) {
+      const element = (await this._page.$x(selector)).shift()
+      if (element) {
+        await element.hover()
+      } else {
+        throw new Error(`WARNING couldn't hover selector "${selector}"`)
+      }
+    } else {
+      await super.waitFor(selector, timeout)
+      await this._page.hover(selector)
+    }
+  }
+
   async focus(selector: string, timeout = defaultWaitTimer) {
     await super.waitFor(selector, timeout)
     await this._page.focus(selector)
