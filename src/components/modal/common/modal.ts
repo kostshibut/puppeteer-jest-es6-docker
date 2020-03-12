@@ -1,5 +1,6 @@
 'use strict'
 import Rest from '@classes/util/rest'
+import { defaultPresenceWaitTimer } from '@const/global/timers'
 
 const selectors = {
   closeModal: '.mfp-close',
@@ -12,7 +13,7 @@ export default class Modal extends Rest {
     await this.waitForModalClose()
   }
 
-  async waitForModalClose() {
-    await super.waitElementToDisappear(selectors.modal)
+  async waitForModalClose(timeout = defaultPresenceWaitTimer) {
+    await super.waitElementToDisappear(selectors.modal, timeout)
   }
 }

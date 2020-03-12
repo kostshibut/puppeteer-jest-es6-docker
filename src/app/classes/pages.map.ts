@@ -30,6 +30,7 @@ import ProfileAdapterRepository
 import Rest from '@classes/util/rest'
 import CheckoutPage from '@components/page/checkout.page'
 import StoreModal from '@components/modal/store.modal'
+import ChangeCityModal from '@components/modal/change.city.modal'
 
 interface PageParent {
   [name: string]: Page,
@@ -47,6 +48,7 @@ export interface PagesMap {
   productModal: ProductModal,
   basketModal: BasketModal,
   storeModal: StoreModal,
+  changeCityModal: ChangeCityModal,
   personalManagerModal: PersonalManagerModal,
   accountPage: AccountPage,
   homePage: HomePage,
@@ -79,6 +81,7 @@ const pageObjects: PagesMap & PageParent = {
   productModal: new ProductModal(),
   basketModal: new BasketModal(),
   storeModal: new StoreModal(),
+  changeCityModal: new ChangeCityModal(),
   personalManagerModal: new PersonalManagerModal(),
   accountPage: new AccountPage(),
   homePage: new HomePage(),

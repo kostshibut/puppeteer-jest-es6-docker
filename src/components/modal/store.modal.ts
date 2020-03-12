@@ -1,25 +1,19 @@
 'use strict'
-import Rest from '@classes/util/rest'
-
-const xpaths = {
-  storeName: '(//div/span[contains(@itemprop,"name")])',
-  setStore: '(//button[contains(@class,"btn-rd-block")])',
-}
-
+import Modal from '@components/modal/common/modal'
 
 const selectors = {
-  storeName: 'div>span[itemprop="name"]',
+  setStore: '.btn-rd-block',
+  storeName: '[itemprop="streetAddress"]',
 }
 
-export default class StoreModal extends Rest {
+export default class StoreModal extends Modal {
     static getSelectors = () => selectors
 
-    async changeStore(position: number = 1) {
-      await super.clickPuppeteer(xpaths.setStore + `[${position}]`)
-    }
-
-    async getStoreName(position: number = 1) {
-      await super.waitForElement(selectors.storeName)
-      return super.getText(xpaths.storeName + `[${position}]`)
+    async changeStore(position: number = 0) {
+      const store = await super.getElementFromListPuppeteer(selectors.storeName, position)
+      const storeName = await this._page.evaluate(el => el.innerText, store)
+      await super.clickAndGetOnPuppeteer(selectors.setStore, position)
+      await super.waitForModalClose()
+      return storeName.trimEnd()
     }
 }

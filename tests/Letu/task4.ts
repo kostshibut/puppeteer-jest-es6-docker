@@ -14,7 +14,6 @@ singlePack('products', () => {
     await HomePage.closeGuessCityPopup()
     await Header.clickCart()
 
-    await Basket.waitForSpinnerToDisappear()
     const itemName = await Basket.addItemToBasketFromRecommended(2)
 
     await ProductModal.addItemToBasket()

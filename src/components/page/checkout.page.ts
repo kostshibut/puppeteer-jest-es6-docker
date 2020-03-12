@@ -3,10 +3,12 @@
 import Rest from '@classes/util/rest'
 
 const selectors = {
-  inputFirstName: 'checkout-field[params*="data: userFirstNameParams"]>div>div[class*="form-group"]>input',
-  inputLastName: 'checkout-field[params*="data: userSecondNameParams"]>div>div[class*="form-group"]>input',
-  inputPhoneNumber: 'checkout-field[params*="data: userPhoneParams"]>div>div[class*="form-group"]>input',
-  inputEmailParams: 'checkout-field[params*="UserEmailParams"]>div>div[class*="form-group"]>input',
+  inputFirstName: '[name="firstName"]',
+  inputLastName: '[name="lastName"]',
+  inputPhoneNumber: '[name="phoneNumber"]',
+  inputEmailParams: '[name="email"]',
+  disabledPaymentButton: '.checkout__final-action-btn[disabled]',
+  paymentByCard: '[for*="-paytype"]',
 }
 
 export default class CheckoutPage extends Rest {
@@ -17,5 +19,18 @@ export default class CheckoutPage extends Rest {
       await super.type(selectors.inputLastName, lastName)
       await super.type(selectors.inputPhoneNumber, phoneNumber)
       await super.type(selectors.inputEmailParams, email)
+    }
+
+    async isProcessPaymentAvailable() {
+      try {
+        await super.waitForElement(selectors.disabledPaymentButton)
+        return false
+      } catch (e) {
+        return true
+      }
+    }
+
+    async setPaymentByCard() {
+      await super.clickWithResponse(selectors.paymentByCard, true)
     }
 }

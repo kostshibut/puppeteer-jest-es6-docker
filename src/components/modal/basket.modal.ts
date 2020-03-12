@@ -2,7 +2,8 @@
 import Modal from '@components/modal/common/modal'
 
 const selectors = {
-  productTitle: 'div[class*="product-modal-title"]',
+  productTitle: '.product-modal-title',
+  addItemToBasket: 'a[href="cart"]',
 }
 
 export default class BasketModal extends Modal {
@@ -10,5 +11,11 @@ export default class BasketModal extends Modal {
 
     async getProductTitle() {
       return super.getText(selectors.productTitle)
+    }
+
+    async checkout() {
+      await super.waitForSpinnerToDisappear()
+      await super.clickPuppeteer(selectors.addItemToBasket)
+      await super.waitForModalClose()
     }
 }

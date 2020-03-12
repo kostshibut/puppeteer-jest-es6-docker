@@ -1,4 +1,4 @@
-import { singlePack, test} from '@actions'
+import { singlePack, test } from '@actions'
 import po from '@pages'
 import { browser } from '@config/jest.settings'
 
