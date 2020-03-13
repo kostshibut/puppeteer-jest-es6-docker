@@ -31,6 +31,8 @@ import Rest from '@classes/util/rest'
 import CheckoutPage from '@components/page/checkout.page'
 import StoreModal from '@components/modal/store.modal'
 import ChangeCityModal from '@components/modal/change.city.modal'
+import FavoriteModal from '@components/modal/favorite.modal'
+import LoginPage from '@components/page/login.page'
 
 interface PageParent {
   [name: string]: Page,
@@ -45,9 +47,11 @@ export interface PagesMap {
   productDetailsPage: ProductDetailsPage,
   productLandingPage: ProductLandingPage,
   loginModal: LoginModal,
+  loginPage: LoginPage,
   productModal: ProductModal,
   basketModal: BasketModal,
   storeModal: StoreModal,
+  favoriteModal: FavoriteModal,
   changeCityModal: ChangeCityModal,
   personalManagerModal: PersonalManagerModal,
   accountPage: AccountPage,
@@ -78,9 +82,11 @@ const pageObjects: PagesMap & PageParent = {
   productDetailsPage: new ProductDetailsPage(),
   productLandingPage: new ProductLandingPage(),
   loginModal: new LoginModal(),
+  loginPage: new LoginPage(),
   productModal: new ProductModal(),
   basketModal: new BasketModal(),
   storeModal: new StoreModal(),
+  favoriteModal: new FavoriteModal(),
   changeCityModal: new ChangeCityModal(),
   personalManagerModal: new PersonalManagerModal(),
   accountPage: new AccountPage(),

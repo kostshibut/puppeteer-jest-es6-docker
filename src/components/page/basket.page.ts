@@ -1,9 +1,10 @@
 'use strict'
 import Rest from '@classes/util/rest'
+import Listing from '@components/page/listing/listing'
 
 const selectors = {
-  addItemToBasket: '.btn-primary',
-  productTitle: '.products-list__item-title',
+  // addItemToBasket: '.btn-primary',
+  // productTitle: '.products-list__item-title',
   itemInOrder: '.cart-item-header',
   courierDelivery: '[for*="-courier"]',
   takeAway: '[for*="-store"]',
@@ -13,19 +14,8 @@ const selectors = {
   checkoutButton: '.btn-primary.btn-block',
 }
 
-export default class Basket extends Rest {
-  async addItemToBasketFromRecommended(position: number = 0) {
-    await super.waitForSpinnerToDisappear()
-    const elem = await super.getElementFromListPuppeteer(selectors.productTitle, position)
-    await elem.hover()
-    const label = await this._page.evaluate(el => el.innerText, elem)
-    const bnt = await super.getElementFromListPuppeteer(selectors.addItemToBasket, position)
-    await bnt.click()
-    await super.waitForModal()
-    return label
-  }
-
-  async openPDP(position: number = 0) {
+export default class Basket extends Listing {
+  async openPdpFromBasket(position: number = 0) {
     await super.clickAndGetOnPuppeteer(selectors.itemInOrder, position)
     await super.waitForSpinnerToDisappear()
   }

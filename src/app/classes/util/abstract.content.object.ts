@@ -166,19 +166,23 @@ export default class AbstractContentObject extends Checker {
     }, whatIsReplaced, selector, isXpath, replaceValue, replacePattern)
   }
 
-  async getText(selector: string, timeout = defaultWaitTimer)
+  async getText(elementOrSelector: ElementHandle | string, timeout = defaultWaitTimer)
     : Promise<string> {
-    if (super.isXpath(selector)) {
-      await super.waitForXPath(selector, timeout)
-      const elemXPath = (await this._page.$x(selector))[0]
-      return this._page.evaluate(e => e.innerText, elemXPath)
+    if (typeof elementOrSelector === 'string') {
+      if (super.isXpath(elementOrSelector)) {
+        await super.waitForXPath(elementOrSelector, timeout)
+        const elemXPath = (await this._page.$x(elementOrSelector))[0]
+        return this._page.evaluate(e => e.innerText, elemXPath)
+      } else {
+        await super.waitForElement(elementOrSelector, timeout)
+        const result = await this._page.evaluate((selector) => {
+          const elem = document.querySelector(selector)
+          if (elem) return elem.innerText
+        }, elementOrSelector)
+        return (result) || ''
+      }
     } else {
-      await super.waitForElement(selector, timeout)
-      const result = await this._page.evaluate((selector) => {
-        const elem = document.querySelector(selector)
-        if (elem) return elem.innerText
-      }, selector)
-      return (result) || ''
+      return this._page.evaluate(el => el.innerText, elementOrSelector)
     }
   }
 

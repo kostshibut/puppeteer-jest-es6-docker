@@ -9,7 +9,8 @@ export default class HomePage extends Rest {
   static getSelectors = () => selectors
 
   async closeGuessCityPopup() {
-    await super.clickPuppeteer(selectors.guessCityPopup, 5000)
+    await super.clickPuppeteer(selectors.guessCityPopup)
+    await super.waitElementAbsence(selectors.guessCityPopup)
   }
   
 }

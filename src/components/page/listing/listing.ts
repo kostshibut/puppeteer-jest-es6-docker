@@ -24,19 +24,17 @@ const selectors = {
     },
   },
   products: {
+    addToBasket: '.btn-primary',
+    addToFavorite: '.btn-default',
     container: productsContainer,
-    product: product,
-    pdpLink: `${product} a`,
+    title: '.products-list__item-title',
+    product: '.products-list__item',
+    pdpLink: `.products-list__item-container`,
     quantity: {
       container: `${product} ${quantity.container}`,
       increase: `${product} ${quantity.increase}`,
       input: `${product} ${quantity.input}`,
       decrease: `${product} ${quantity.decrease}`,
-    },
-    addToBasket: {
-      container: addToBasketContainer,
-      absoluteDisabled: `${addToBasketContainer}${buttonDisabled}`,
-      relativeDisabled: buttonDisabled,
     },
     openModal: `${product} #openModalButton`,
   },
@@ -61,7 +59,8 @@ class Listing extends Rest implements AddToBasketInterface {
   static getListingSelectors = () => selectors
 
   async goToPDP(position = 0) {
-    await super.clickOnPuppeteer(selectors.products.pdpLink, position)
+    await super.clickAndGetOnPuppeteer(selectors.products.pdpLink, position)
+    await super.waitForSpinnerToDisappear()
   }
 
   async goToPDPAndBack(position = 0, url?: string, takeScreen = true) {
@@ -76,35 +75,33 @@ class Listing extends Rest implements AddToBasketInterface {
   }
 
   async addToBasket(position = 0) {
-    const button = await super.getElementFromListPuppeteer(
-      selectors.products.addToBasket.container, position)
+    return this.openProductModal(position, selectors.products.addToBasket)
+  }
 
-    // noinspection ES6MissingAwait
-    const clicked = this._page.waitFor(
-      (selector: string, position: number) => {
-        // @ts-ignore
-        const elements: HTMLElement[] = document.querySelectorAll(selector)
-        if (elements) {
-          elements[position].click()
-          return true
-        }
-      },
-      { timeout: defaultWaitTimer },
-      selectors.products.addToBasket.container, position)
+  async addToFavorite(position = 0) {
+    return this.openProductModal(position, selectors.products.addToFavorite)
+  }
 
-    const timeout = defaultResponseWaitTimer
-    const isAddedResponse = super.waitAddItemToOrderResponse(timeout)
-    await super.checkResponseForErrors('Add to basket response error.', isAddedResponse, timeout)
-
-    await super.waitFor(selectors.products.addToBasket.absoluteDisabled)
-    await button.$(
-      selectors.products.addToBasket.relativeDisabled)
-    await Promise.resolve(clicked)
-      .catch(e => console.log('addToBasket', e))
+  async hoverProduct(position = 0) {
+    const elem = await super.getElementFromListPuppeteer(
+      selectors.products.product, position)
+    await elem.hover()
+    return elem
   }
 
   async openModal(position = 0) {
     await super.clickOnPuppeteer(selectors.products.openModal, position)
+  }
+
+  async openProductModal(position = 0, selector : string) {
+    const elem = await this.hoverProduct(position)
+    const label = await super.getText(await super
+      .getElementFromParentElementPuppeteer(elem, selectors.products.title))
+    const btn = await super.getElementFromParentElementPuppeteer(
+      elem, selector)
+    await btn.click()
+    await super.waitForModal()
+    return label
   }
 
   async clickOnFacet(position: number): Promise<ElementHandle> {

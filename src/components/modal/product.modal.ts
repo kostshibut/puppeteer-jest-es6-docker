@@ -1,14 +1,21 @@
 'use strict'
-import Rest from '@classes/util/rest'
+import Modal from '@components/modal/common/modal'
 
 const selectors = {
-  addItemToBasket: 'button.btn-lg.btn-primary',
+  addItemToBasket: '[data-bind*="add-to-cart"]',
+  addItemToWishList: '[data-bind*="addToWishlist"]',
 }
 
-export default class ProductModal extends Rest {
+export default class ProductModal extends Modal {
     static getSelectors = () => selectors
 
     async addItemToBasket() {
       await super.clickPuppeteer(selectors.addItemToBasket)
+      await super.waitElementAbsence(selectors.addItemToBasket)
+    }
+
+    async addItemToFavorite() {
+      await super.clickPuppeteer(selectors.addItemToWishList)
+      await super.waitElementAbsence(selectors.addItemToWishList)
     }
 }

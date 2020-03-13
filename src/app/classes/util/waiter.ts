@@ -96,6 +96,11 @@ export default class Waiter extends Page {
     await this._page.waitForFunction(imagesHaveLoaded, { timeout: timeout })
   }
 
+  async waitForModal(timeout = defaultResponseWaitTimer) {
+    this.waitForElement('mfp-content', timeout)
+    this.waitForSpinnerToDisappear()
+  }
+
   async waitFor(selector: string,
           timeout = defaultWaitTimer) {
     if (this.isXpath(selector)) {
