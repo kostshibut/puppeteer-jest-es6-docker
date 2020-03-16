@@ -3,17 +3,19 @@
 import Rest from '@classes/util/rest'
 
 const selectors = {
+  login: '.user-menu_login-link',
   searchInput: '[type="search"]',
-  searchButton: 'form[id="search-form"]>*>button',
+  searchButton: '[role*="search"] button',
   cartButton: '[href="/cart"]',
   loginButton: '[href="/login"]',
-  citySelector: 'span[class="link-underline"]',
+  citySelector: '.link-underline',
   searchCity: '.search-form__input',
   guessCityPopup: '.guess-city-popup-close',
   wishListItemCount: '[id*="WishlistLink"] em',
   accountDropdown: '[data-bind*="myAccount"]',
   profile: '[class*="dropdown"][href*="profile"]',
-  logout: '[data-bind*="logout"][href="#"]',
+  logout: '[class*="dropdown"][href="#"]',
+  searchResult: '[data-bind*= fullHref] mark',
 }
 
 export default class Header extends Rest {
@@ -23,18 +25,21 @@ export default class Header extends Rest {
     await super.clickPuppeteer(selectors.citySelector)
   }
 
-  async searchFor(text: string) {
+  async search(text: string) {
     await super.type(selectors.searchInput, text)
-    await super.clickPuppeteer(selectors.searchButton)
-    await super.waitForResponseURLToContain('search')
-    await super.waitForSpinnerToDisappear()
-    await super.hover('[id=footer]')
+    await super.waitForElement(selectors.searchResult)
+  }
+
+  async goToPlpFromSearch() {
+    await super.clickWithResponse(selectors.searchButton, true, 'search')
+  }
+
+  async goToPdpFromSearch(position: number = 0) {
+    await super.clickAndGetOnPuppeteer(selectors.searchResult, position)
   }
 
   async openBasket() {
-    await super.clickPuppeteer(selectors.cartButton)
-    await super.waitCartResponse()
-    await super.waitForSpinnerToDisappear()
+    await super.clickWithResponse(selectors.cartButton, true, 'cart')
   }
 
   async openLoginPage() {
@@ -55,7 +60,7 @@ export default class Header extends Rest {
   }
 
   async isAnonymousUser() {
-    return (await super.getText('.user-menu_login-link')).includes('Войти')
+    return (await super.getText(selectors.login)).includes('Войти')
   }
 
   async closeGuessCityPopup() {

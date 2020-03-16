@@ -14,7 +14,8 @@ import po from '@pages'
 // 12. Проверить, что кнопка "Оплатить заказ" задизейблена
 // 13. Заполнить все поля валидными данными
 // 14. Выбрать оплату банковской картой
-// 15. Проверить, что кнопка "Оплатить заказ" раздизейблена, но не кликать на нее
+// 15. Проверить, что кнопка "Оплатить заказ" раздизейблена,
+// но не кликать на нее
 singlePack('products', () => {
   const PDP = po.productDetailsPage
   const PLP = po.productLandingPage
@@ -28,12 +29,11 @@ singlePack('products', () => {
   let storeAddress: string
 
   test('openStore', async () => {
-    await HomePage.setUserAgent('AutoTest')
     await HomePage.open()
     await HomePage.closeGuessCityPopup()
   })
-  test('searchForProduct', async () => Header.searchFor('коробка'))
-  test('openProductPdp', async () => PLP.openProductPDP())
+  test('searchForProduct', async () => Header.search('коробка'))
+  test('openProductPdp', async () => Header.goToPdpFromSearch())
   test('changeStore', async () => {
     await PDP.openChangeStoreModal()
     storeAddress = await StoreModal.changeStore()
@@ -47,24 +47,26 @@ singlePack('products', () => {
     expect(await PDP.getStoreTitle()).toEqual('')
   })
   test('addItemToBasket', async () => PDP.addItemToBasket())
-  test('openStore', async () => {
-
-  })
-  test('searchAndCheckTakeAwayDelivery', async () => {
+  test('openBasketPage', async () => {
     await BasketModal.checkout()
     await Basket.waitForCourierInfo()
-    expect(await Basket.isTakeAwayAvailable() && await Basket.isCourierAvailable()).toEqual(false)
-
+    expect(await Basket.isTakeAwayAvailable() &&
+            await Basket.isCourierAvailable()).toEqual(false)
+  })
+  test('changeCityToMoscow', async () => {
     await Header.changeCity()
     await ChangeCityModal.setCity('Москва')
-
     await Basket.waitForTakeAwayInfo()
-    expect((await Basket.getTakeAwayPlace()).toLowerCase()).toContain(storeAddress.toLowerCase())
+    expect((await Basket.getTakeAwayPlace()).toLowerCase())
+      .toContain(storeAddress.toLowerCase())
+  })
+  test('openCheckoutPage', async () => {
     await Basket.openCheckoutPage()
-
     expect(await Checkout.isProcessPaymentAvailable()).toEqual(false)
-
-    await Checkout.fillCheckoutTakeAwayData('имя', 'фамилия', '+7 (111) 111-11-11', 'k@email.ru')
+  })
+  test('fillCheckoutData', async () => {
+    await Checkout.fillCheckoutTakeAwayData('имя', 'фамилия',
+      '+7 (111) 111-11-11', 'k@email.ru')
     await Checkout.setPaymentByCard()
     expect(await Checkout.isProcessPaymentAvailable()).toEqual(true)
   })

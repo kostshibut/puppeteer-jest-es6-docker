@@ -93,7 +93,7 @@ class Listing extends Rest implements AddToBasketInterface {
     await super.clickOnPuppeteer(selectors.products.openModal, position)
   }
 
-  async openProductModal(position = 0, selector : string) {
+  private async openProductModal(position = 0, selector : string) {
     const elem = await this.hoverProduct(position)
     const label = await super.getText(await super
       .getElementFromParentElementPuppeteer(elem, selectors.products.title))

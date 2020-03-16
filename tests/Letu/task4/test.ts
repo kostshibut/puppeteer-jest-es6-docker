@@ -16,7 +16,6 @@ singlePack('products', () => {
   let itemName: string
 
   test('openStore', async () => {
-    await HomePage.setUserAgent('AutoTest')
     await HomePage.open()
     await HomePage.closeGuessCityPopup()
   })
