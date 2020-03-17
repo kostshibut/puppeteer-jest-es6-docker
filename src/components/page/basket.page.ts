@@ -3,8 +3,6 @@ import Rest from '@classes/util/rest'
 import Listing from '@components/page/listing/listing'
 
 const selectors = {
-  // addItemToBasket: '.btn-primary',
-  // productTitle: '.products-list__item-title',
   itemInOrder: '.cart-item-header',
   courierDelivery: '[for*="-courier"]',
   takeAway: '[for*="-store"]',
@@ -12,29 +10,23 @@ const selectors = {
   takeAwayAvailability: '[value="pickup"]',
   takeAwayPlace: '.products-list-table__delivery',
   checkoutButton: '.btn-primary.btn-block',
+  pdpPage: '[id*="ProductDetail"]',
+  checkoutPage: '.LETUR-Checkout',
 }
 
 export default class Basket extends Listing {
   async openPdpFromBasket(position: number = 0) {
-    await super.clickAndGetOnPuppeteer(selectors.itemInOrder, position)
+    await super.clickElementFromListPuppeteer(selectors.itemInOrder, position)
     await super.waitForSpinnerToDisappear()
+    await super.waitProductPDPResponse()
   }
 
   async openCheckoutPage() {
-    await super.clickPuppeteer(selectors.checkoutButton)
-    await super.waitForSpinnerToDisappear()
+    await super.clickWithResponse(selectors.checkoutButton, true, 'checkout')
   }
 
   async getTakeAwayPlace() {
     return super.getText(selectors.takeAwayPlace)
-  }
-
-  async waitForCourierInfo() {
-    await super.waitForElement(selectors.courierDelivery)
-  }
-
-  async waitForTakeAwayInfo() {
-    await super.waitForElement(selectors.takeAway)
   }
 
   async isCourierAvailable() {

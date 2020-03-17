@@ -59,7 +59,8 @@ class Listing extends Rest implements AddToBasketInterface {
   static getListingSelectors = () => selectors
 
   async goToPDP(position = 0) {
-    await super.clickAndGetOnPuppeteer(selectors.products.pdpLink, position)
+    await super.clickElementFromListPuppeteer(
+      selectors.products.pdpLink, position)
     await super.waitForSpinnerToDisappear()
   }
 
@@ -100,7 +101,7 @@ class Listing extends Rest implements AddToBasketInterface {
     const btn = await super.getElementFromParentElementPuppeteer(
       elem, selector)
     await btn.click()
-    await super.waitForModal()
+    await super.waitProductModalResponse()
     return label
   }
 

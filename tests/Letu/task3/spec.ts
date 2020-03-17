@@ -12,7 +12,6 @@ singlePack('products', () => {
   const LoginPage = po.loginPage
 
   test('openStore', async () => {
-    await HomePage.setUserAgent('AutoTest')
     await HomePage.open()
     await Header.closeGuessCityPopup()
   })

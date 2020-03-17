@@ -18,7 +18,7 @@ singlePack('products', () => {
   test('openBasket', async () => Header.openBasket())
   test('addToFavorite', async () => {
     let item = await Header.getWishListItemCount()
-    await Basket.addToFavorite(2)
+    await Basket.addToFavorite()
     await ProductModal.addItemToFavorite()
     await FavoriteModal.closeModal()
     expect(await Header.getWishListItemCount()).toEqual(++item)

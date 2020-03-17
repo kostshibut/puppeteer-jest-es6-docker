@@ -17,5 +17,6 @@ export default class BasketModal extends Modal {
       await super.waitForSpinnerToDisappear()
       await super.clickPuppeteer(selectors.addItemToBasket)
       await super.waitForModalClose()
+      await super.waitForDeliveryInfoResponse()
     }
 }

@@ -12,7 +12,6 @@ export default class ChangeCityModal extends Modal {
       super.waitForTextToBe(text, '.city-item'),
       super.waitForResponseURLToContain('geolocationCities'),
     ])
-    await super.clickPuppeteer('.city-item')
-    await super.waitForSpinnerToDisappear()
+    await super.clickWithResponse('.city-item', true, 'setGeolocationInfo')
   }
 }

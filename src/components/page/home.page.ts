@@ -12,5 +12,4 @@ export default class HomePage extends Rest {
     await super.clickPuppeteer(selectors.guessCityPopup)
     await super.waitElementAbsence(selectors.guessCityPopup)
   }
-  
 }

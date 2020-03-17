@@ -5,6 +5,7 @@ const selectors = {
   inputEmail: '[type="email"]',
   inputPassword: '[type="password"]',
   loginButton: '.btn-primary',
+  loginCartridge: '.LETUR-Login',
 }
 
 export default class LoginPage extends Rest {

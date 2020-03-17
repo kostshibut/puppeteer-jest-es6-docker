@@ -1,6 +1,7 @@
 'use strict'
 
 import Rest from '@classes/util/rest'
+import { defaultWaitTimer } from '@const/global/timers'
 
 const selectors = {
   login: '.user-menu_login-link',
@@ -16,6 +17,11 @@ const selectors = {
   profile: '[class*="dropdown"][href*="profile"]',
   logout: '[class*="dropdown"][href="#"]',
   searchResult: '[data-bind*= fullHref] mark',
+  profileInfo: '.LETUR-ProfileInfo',
+  plpResultList: '.LETUR-ResultsList',
+  pdpPage: '[id*="ProductDetail"]',
+  basketPage: '.LETUR-CartEditor',
+  loginPage: '.LETUR-Login',
 }
 
 export default class Header extends Rest {
@@ -23,11 +29,12 @@ export default class Header extends Rest {
 
   async changeCity() {
     await super.clickPuppeteer(selectors.citySelector)
+    await super.waitForModal()
   }
 
   async search(text: string) {
     await super.type(selectors.searchInput, text)
-    await super.waitForElement(selectors.searchResult)
+    await super.waitSearchResultResponse()
   }
 
   async goToPlpFromSearch() {
@@ -35,7 +42,9 @@ export default class Header extends Rest {
   }
 
   async goToPdpFromSearch(position: number = 0) {
-    await super.clickAndGetOnPuppeteer(selectors.searchResult, position)
+    await super.clickElementFromListPuppeteer(selectors.searchResult, position)
+    await super.waitForSpinnerToDisappear()
+    await super.waitProductPDPResponse()
   }
 
   async openBasket() {
@@ -48,7 +57,7 @@ export default class Header extends Rest {
 
   async openAccountDropdown() {
     await super.clickPuppeteer(selectors.accountDropdown)
-    await super.waitElementPresence('.header-dropdown-item')
+    await super.waitElementPresence(selectors.profile, defaultWaitTimer)
   }
 
   async openAccountPage() {
@@ -57,6 +66,7 @@ export default class Header extends Rest {
 
   async logout() {
     await super.clickWithResponse(selectors.logout, true, 'logout-success')
+    await super.waitElementToDisappear(selectors.accountDropdown)
   }
 
   async isAnonymousUser() {
@@ -65,7 +75,7 @@ export default class Header extends Rest {
 
   async closeGuessCityPopup() {
     await super.clickPuppeteer(selectors.guessCityPopup)
-    await super.waitElementAbsence(selectors.guessCityPopup)
+    await super.waitElementToDisappear(selectors.guessCityPopup)
   }
 
   async getWishListItemCount() {

@@ -18,7 +18,6 @@ import po from '@pages'
 // но не кликать на нее
 singlePack('products', () => {
   const PDP = po.productDetailsPage
-  const PLP = po.productLandingPage
   const HomePage = po.homePage
   const Header = po.header
   const Checkout = po.checkoutPage
@@ -37,7 +36,7 @@ singlePack('products', () => {
   test('changeStore', async () => {
     await PDP.openChangeStoreModal()
     storeAddress = await StoreModal.changeStore()
-    await PDP.waitForDeliveryInfo()
+    await PDP.waitProductPDPResponse()
     expect((await PDP.getStoreTitle()).toLowerCase())
       .toContain(storeAddress.toLowerCase())
   })
@@ -49,14 +48,12 @@ singlePack('products', () => {
   test('addItemToBasket', async () => PDP.addItemToBasket())
   test('openBasketPage', async () => {
     await BasketModal.checkout()
-    await Basket.waitForCourierInfo()
     expect(await Basket.isTakeAwayAvailable() &&
             await Basket.isCourierAvailable()).toEqual(false)
   })
   test('changeCityToMoscow', async () => {
     await Header.changeCity()
     await ChangeCityModal.setCity('Москва')
-    await Basket.waitForTakeAwayInfo()
     expect((await Basket.getTakeAwayPlace()).toLowerCase())
       .toContain(storeAddress.toLowerCase())
   })

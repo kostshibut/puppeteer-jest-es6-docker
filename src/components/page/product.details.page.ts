@@ -7,7 +7,6 @@ const selectors = {
   storeInfo: '.product-delivery-info',
   changeStore: '.alert-small',
   addItemToBasket: '.btn-primary',
-  deliveryInfo: '.product-delivery-info',
 }
 
 export default class ProductDetailsPage extends Rest {
@@ -17,9 +16,9 @@ export default class ProductDetailsPage extends Rest {
     return super.getText(selectors.productTitle)
   }
 
-  async openChangeStoreModal(timeout = defaultResponseWaitTimer) {
+  async openChangeStoreModal() {
     await super.clickPuppeteer(selectors.changeStore)
-    await super.waitForModal(timeout)
+    await super.waitForStoreModalResponse()
   }
 
   async getStoreTitle() {
@@ -28,10 +27,6 @@ export default class ProductDetailsPage extends Rest {
 
   async addItemToBasket() {
     await super.clickPuppeteer(selectors.addItemToBasket)
-    await super.waitForModal()
-  }
-
-  async waitForDeliveryInfo() {
-    await super.waitForElement(selectors.deliveryInfo)
+    await super.waitAddItemToOrderResponse()
   }
 }

@@ -96,9 +96,8 @@ export default class Waiter extends Page {
     await this._page.waitForFunction(imagesHaveLoaded, { timeout: timeout })
   }
 
-  async waitForModal(timeout = defaultResponseWaitTimer) {
-    this.waitForElement('mfp-content', timeout)
-    this.waitForSpinnerToDisappear()
+  async waitForModal(timeout = defaultWaitTimer) {
+    this.waitForElement('.letu-modal', timeout)
   }
 
   async waitFor(selector: string,

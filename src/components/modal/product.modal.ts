@@ -11,11 +11,11 @@ export default class ProductModal extends Modal {
 
     async addItemToBasket() {
       await super.clickPuppeteer(selectors.addItemToBasket)
-      await super.waitElementAbsence(selectors.addItemToBasket)
+      await super.waitAddItemToOrderResponse()
     }
 
     async addItemToFavorite() {
       await super.clickPuppeteer(selectors.addItemToWishList)
-      await super.waitElementAbsence(selectors.addItemToWishList)
+      await super.waitAddProductToWishListResponse()
     }
 }

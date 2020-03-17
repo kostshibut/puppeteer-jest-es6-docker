@@ -144,8 +144,38 @@ export default class Rest extends AbstractContentObject {
     return super.waitForResponseURLToContain('cart', timeout)
   }
 
-  async waitProductPDP(
+  async waitProductPDPResponse(
           timeout = defaultResponseWaitTimer): Promise<Response> {
-    return super.waitForResponseURLToContain('product', timeout)
+    return super.waitForResponseURLToContain('skuDelivery', timeout)
+  }
+
+  async waitForDeliveryInfoResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('orderDelivery', timeout)
+  }
+
+  async waitForStoreModalResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('storesByCity', timeout)
+  }
+
+  async waitForUpdateShippingDetailsResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('updateShippingDetails', timeout)
+  }
+
+  async waitProductModalResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('product-mini-detail', timeout)
+  }
+
+  async waitAddProductToWishListResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('addProductToWishList', timeout)
+  }
+
+  async waitSearchResultResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('resultslist-data', timeout)
   }
 }

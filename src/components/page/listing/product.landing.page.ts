@@ -10,8 +10,8 @@ export default class ProductLandingPage extends Listing {
 
   async openProductPDP(position: number = 0) {
     await Promise.all([
-      super.clickAndGetOnPuppeteer(selectors.productItem, position),
-      super.waitProductPDP(),
+      super.clickElementFromListPuppeteer(selectors.productItem, position),
+      super.waitProductPDPResponse(),
       super.waitForSpinnerToDisappear(),
     ])
   }

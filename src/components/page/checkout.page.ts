@@ -7,14 +7,15 @@ const selectors = {
   inputLastName: '[name="lastName"]',
   inputPhoneNumber: '[name="phoneNumber"]',
   inputEmailParams: '[name="email"]',
-  disabledPaymentButton: '.checkout__final-action-btn[disabled]',
+  disabledPaymentButton: '[class*="checkout"][disabled]',
   paymentByCard: '[for*="-paytype"]',
 }
 
 export default class CheckoutPage extends Rest {
     static getSelectors = () => selectors
 
-    async fillCheckoutTakeAwayData(firstName: string, lastName: string, phoneNumber: string, email: string) {
+    async fillCheckoutTakeAwayData(firstName: string, lastName: string,
+            phoneNumber: string, email: string) {
       await super.type(selectors.inputFirstName, firstName)
       await super.type(selectors.inputLastName, lastName)
       await super.type(selectors.inputPhoneNumber, phoneNumber)
@@ -31,6 +32,6 @@ export default class CheckoutPage extends Rest {
     }
 
     async setPaymentByCard() {
-      await super.clickWithResponse(selectors.paymentByCard, true)
+      await super.clickWithResponse(selectors.paymentByCard, true, 'updateShippingDetails')
     }
 }
