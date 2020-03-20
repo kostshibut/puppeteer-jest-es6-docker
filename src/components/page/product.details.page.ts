@@ -19,7 +19,6 @@ export default class ProductDetailsPage extends Rest {
   async openChangeStoreModal() {
     await super.clickPuppeteer(selectors.changeStore)
     await super.waitForStoreModalResponse()
-    console.log('waited openChangeStoreModal')
   }
 
   async getStoreTitle() {
