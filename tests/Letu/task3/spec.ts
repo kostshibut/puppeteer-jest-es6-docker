@@ -1,5 +1,6 @@
 import { singlePack, test } from '@actions'
 import po from '@pages'
+import openLetuHomepage from '@precondition/open.page'
 // 1. Зайти на главную страницу
 // 2. Нажать войти
 // 3. Авторизоваться под любым аккаунтом
@@ -7,14 +8,11 @@ import po from '@pages'
 // 5. Вылогиниться
 // 6. Проверить, что теперь в хедере "Войти"
 singlePack('products', () => {
-  const HomePage = po.homePage
   const Header = po.header
   const LoginPage = po.loginPage
 
-  test('openStore', async () => {
-    await HomePage.open()
-    await Header.closeGuessCityPopup()
-  })
+  openLetuHomepage(po)
+
   test('openLoginPage', async () => Header.openLoginPage())
   test('loginUser', async () => {
     await LoginPage.typeLoginCredentials('k.shibut98@mail.ru', '0987654321')

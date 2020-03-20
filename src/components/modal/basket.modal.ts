@@ -13,8 +13,7 @@ export default class BasketModal extends Modal {
       return super.getText(selectors.productTitle)
     }
 
-    async checkout() {
-      await super.waitForSpinnerToDisappear()
+    async openBasket() {
       await super.clickPuppeteer(selectors.addItemToBasket)
       await super.waitForModalClose()
       await super.waitForDeliveryInfoResponse()

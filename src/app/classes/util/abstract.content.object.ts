@@ -29,7 +29,6 @@ export default class AbstractContentObject extends Checker {
           waitForSpinner = true,
           options: DirectNavigationOptions = { waitUntil: 'networkidle0' },
   ) {
-    await this.setUserAgent('AutoTest')
     try {
       await this._page.goto(path, options)
     } catch (e) {

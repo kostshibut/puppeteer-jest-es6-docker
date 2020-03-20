@@ -178,4 +178,9 @@ export default class Rest extends AbstractContentObject {
           timeout = defaultResponseWaitTimer): Promise<Response> {
     return super.waitForResponseURLToContain('resultslist-data', timeout)
   }
+
+  async waitForProfileInfoResponse(
+          timeout = defaultResponseWaitTimer): Promise<Response> {
+    return super.waitForResponseURLToContain('extendedProfileInfo-v2', timeout)
+  }
 }

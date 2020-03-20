@@ -17,6 +17,8 @@ export default class LoginPage extends Rest {
     }
 
     async login() {
+      await super.hover('footer')
       await super.clickWithResponse(selectors.loginButton, true, 'login-success')
+      await super.waitForResponseURLToContain('countsFromProfile')
     }
 }

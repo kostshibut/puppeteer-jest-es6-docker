@@ -1,5 +1,6 @@
 import { singlePack, test } from '@actions'
 import po from '@pages'
+import openLetuHomepage from '@precondition/open.page'
 // 1. Найти "коробка" в поиске
 // 2. Открыть первый результат, содержащий это слово
 // 3. Выбрать первый магазин самовывоза на ПДП
@@ -18,7 +19,6 @@ import po from '@pages'
 // но не кликать на нее
 singlePack('products', () => {
   const PDP = po.productDetailsPage
-  const HomePage = po.homePage
   const Header = po.header
   const Checkout = po.checkoutPage
   const Basket = po.basket
@@ -27,39 +27,38 @@ singlePack('products', () => {
   const ChangeCityModal = po.changeCityModal
   let storeAddress: string
 
-  test('openStore', async () => {
-    await HomePage.open()
-    await HomePage.closeGuessCityPopup()
-  })
+  openLetuHomepage(po)
   test('searchForProduct', async () => Header.search('коробка'))
   test('openProductPdp', async () => Header.goToPdpFromSearch())
   test('changeStore', async () => {
     await PDP.openChangeStoreModal()
     storeAddress = await StoreModal.changeStore()
-    await PDP.waitProductPDPResponse()
+    await PDP.waitForProductDeliveryUpdate()
     expect((await PDP.getStoreTitle()).toLowerCase())
       .toContain(storeAddress.toLowerCase())
   })
   test('changeCityToUrai', async () => {
-    await Header.changeCity()
+    await Header.openChangeCityModal()
     await ChangeCityModal.setCity('Урай')
-    expect(await PDP.getStoreTitle()).toEqual('')
+    await PDP.waitForSpinnerToDisappear()
+    expect(await PDP.isTakeAwayUnavailable()).toBeTruthy()
   })
   test('addItemToBasket', async () => PDP.addItemToBasket())
   test('openBasketPage', async () => {
-    await BasketModal.checkout()
-    expect(await Basket.isTakeAwayAvailable() &&
-            await Basket.isCourierAvailable()).toEqual(false)
+    await BasketModal.openBasket()
+    expect(await Basket.isTakeAwayAvailable()).toEqual(false)
+    expect(await Basket.isCourierAvailable()).toEqual(false)
   })
   test('changeCityToMoscow', async () => {
-    await Header.changeCity()
+    await Header.openChangeCityModal()
     await ChangeCityModal.setCity('Москва')
+    await Basket.waitForSpinnerToDisappear()
     expect((await Basket.getTakeAwayPlace()).toLowerCase())
       .toContain(storeAddress.toLowerCase())
   })
   test('openCheckoutPage', async () => {
     await Basket.openCheckoutPage()
-    expect(await Checkout.isProcessPaymentAvailable()).toEqual(false)
+    expect(await Checkout.isProcessPaymentUnavailable()).toEqual(true)
   })
   test('fillCheckoutData', async () => {
     await Checkout.fillCheckoutTakeAwayData('имя', 'фамилия',

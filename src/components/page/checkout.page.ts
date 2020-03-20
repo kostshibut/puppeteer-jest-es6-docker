@@ -8,6 +8,7 @@ const selectors = {
   inputPhoneNumber: '[name="phoneNumber"]',
   inputEmailParams: '[name="email"]',
   disabledPaymentButton: '[class*="checkout"][disabled]',
+  enabledPaymentButton: 'button[class*="checkout"]:not([disabled])',
   paymentByCard: '[for*="-paytype"]',
 }
 
@@ -22,13 +23,12 @@ export default class CheckoutPage extends Rest {
       await super.type(selectors.inputEmailParams, email)
     }
 
+    async isProcessPaymentUnavailable() {
+      return !!(await super.waitForElement(selectors.disabledPaymentButton))
+    }
+
     async isProcessPaymentAvailable() {
-      try {
-        await super.waitForElement(selectors.disabledPaymentButton)
-        return false
-      } catch (e) {
-        return true
-      }
+      return !!(await super.waitForElement(selectors.enabledPaymentButton))
     }
 
     async setPaymentByCard() {

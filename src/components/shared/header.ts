@@ -27,7 +27,7 @@ const selectors = {
 export default class Header extends Rest {
   static getSelectors = () => selectors
 
-  async changeCity() {
+  async openChangeCityModal() {
     await super.clickPuppeteer(selectors.citySelector)
     await super.waitForModal()
   }
@@ -43,7 +43,6 @@ export default class Header extends Rest {
 
   async goToPdpFromSearch(position: number = 0) {
     await super.clickElementFromListPuppeteer(selectors.searchResult, position)
-    await super.waitForSpinnerToDisappear()
     await super.waitProductPDPResponse()
   }
 
@@ -56,8 +55,9 @@ export default class Header extends Rest {
   }
 
   async openAccountDropdown() {
+    // await super.waitToBeVisible(selectors.profile)
     await super.clickPuppeteer(selectors.accountDropdown)
-    await super.waitElementPresence(selectors.profile, defaultWaitTimer)
+    await super.waitToBeVisible(selectors.profile)
   }
 
   async openAccountPage() {

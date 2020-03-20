@@ -32,7 +32,7 @@ export default class Basket extends Listing {
   async isCourierAvailable() {
     let state = true
     try {
-      await super._page.$(selectors.courierDeliveryAvailability)
+      await super.getElementPuppeteer(selectors.courierDeliveryAvailability)
       state = false
       return state
     } catch (e) {
@@ -43,7 +43,7 @@ export default class Basket extends Listing {
   async isTakeAwayAvailable() {
     let state = false
     try {
-      await super._page.$(selectors.takeAwayAvailability)
+      await super.getElementPuppeteer(selectors.takeAwayAvailability)
       state = true
       return state
     } catch (e) {

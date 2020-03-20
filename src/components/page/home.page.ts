@@ -2,14 +2,7 @@
 import Rest from '@classes/util/rest'
 
 const selectors = {
-  guessCityPopup: '.guess-city-popup-close',
 }
 
-export default class HomePage extends Rest {
-  static getSelectors = () => selectors
+export default class HomePage extends Rest {}
 
-  async closeGuessCityPopup() {
-    await super.clickPuppeteer(selectors.guessCityPopup)
-    await super.waitElementAbsence(selectors.guessCityPopup)
-  }
-}

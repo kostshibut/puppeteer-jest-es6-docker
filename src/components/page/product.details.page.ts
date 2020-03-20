@@ -25,6 +25,18 @@ export default class ProductDetailsPage extends Rest {
     return super.getText(selectors.storeInfo)
   }
 
+  async isTakeAwayUnavailable() {
+    const storeInfo = await super.getElementPuppeteer(selectors.storeInfo)
+    if (storeInfo) {
+      return await storeInfo.$('li') === null
+    }
+  }
+
+  async waitForProductDeliveryUpdate() {
+    await super.waitForProfileInfoResponse()
+    await super.waitForSpinnerToDisappear()
+  }
+
   async addItemToBasket() {
     await super.clickPuppeteer(selectors.addItemToBasket)
     await super.waitAddItemToOrderResponse()
